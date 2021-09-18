@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
 import { Button } from './Button';
-import { api } from '../services/api';
 
 import '../styles/global.scss';
 import '../styles/sidebar.scss';
@@ -10,23 +8,16 @@ interface SideBarProps {
     id: number;
     name: 'action' | 'comedy' | 'documentary' | 'drama' | 'horror' | 'family';
     title: string;
-  }[] 
+  }[],
+  selectedGenreId: number,
+  setSelectedGenreId: React.Dispatch<React.SetStateAction<number>>
 }
 
-interface GenreResponseProps {
-  id: number;
-  name: 'action' | 'comedy' | 'documentary' | 'drama' | 'horror' | 'family';
-  title: string;
-}
 
 export function SideBar(props:SideBarProps) {
   // Complete aqui
-  const [selectedGenreId, setSelectedGenreId] = useState(1);
-  const [selectedGenre, setSelectedGenre] = useState<GenreResponseProps>({} as GenreResponseProps);
   function handleClickButton(id: number) {
-    setSelectedGenreId(id);
-    console.log(selectedGenreId)
-    console.log(selectedGenre.title)
+    props.setSelectedGenreId(id);
   }
   
 
@@ -41,7 +32,7 @@ export function SideBar(props:SideBarProps) {
           title={genre.title}
           iconName={genre.name}
           onClick={() => handleClickButton(genre.id)}
-          selected={selectedGenreId === genre.id}
+          selected={props.selectedGenreId === genre.id}
         />
       ))}
     </div>
